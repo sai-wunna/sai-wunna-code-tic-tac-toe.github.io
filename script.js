@@ -98,6 +98,17 @@ document.addEventListener('DOMContentLoaded', function () {
         }
       } else if (
         !key &&
+        userMoves.length === 2 &&
+        (smartKeys.some((one) => one === userMoves[0]) ||
+          smartKeys.some((one) => one === userMoves[1]))
+      ) {
+        if (userMoves[0] === 1 && userMoves[1] === 8) {
+          key = 7
+        } else if (userMoves[0] === 3 && userMoves[1] === 8) {
+          key = 7
+        }
+      } else if (
+        !key &&
         ((userMoves[0] === 1 && userMoves[1] === 9) ||
           (userMoves[0] === 9 && userMoves[1] === 1) ||
           (userMoves[1] === 3 && userMoves[1] === 7) ||
