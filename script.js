@@ -37,12 +37,13 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }
 
-  const computerMove = () => {
+   const computerMove = () => {
     const availableMoves = Object.keys(keyHolder).filter(
       (one) => !keyHolder[one]
     )
     const smartKeys = [1, 3, 7, 9]
     if (!gameOver) {
+      let winningKey
       let key
       for (let pattern of winPatterns) {
         const [a, b, c] = pattern
@@ -52,18 +53,21 @@ document.addEventListener('DOMContentLoaded', function () {
           availableMoves.includes(`box_${c}`)
         ) {
           key = c
+          winningKey = c
         } else if (
           computerMoves.includes(b) &&
           computerMoves.includes(c) &&
           availableMoves.includes(`box_${a}`)
         ) {
           key = a
+          winningKey = a
         } else if (
           computerMoves.includes(a) &&
           computerMoves.includes(c) &&
           availableMoves.includes(`box_${b}`)
         ) {
           key = b
+          winningKey = b
         } else if (
           userMoves.includes(a) &&
           userMoves.includes(b) &&
@@ -84,50 +88,37 @@ document.addEventListener('DOMContentLoaded', function () {
           key = b
         }
       }
-      if (!key && userMoves.length === 1 && userMoves[0] !== 5) {
-        key = 5
-      } else if (
-        (!key &&
-          userMoves.length === 2 &&
-          userMoves[0] === 2 &&
-          userMoves[1] === 4) ||
-        (userMoves[1] === 2 && userMoves[0] === 4)
-      ) {
-        key = 1
-      } else if (
-        !key &&
-        (userMoves[0] === 1 || userMoves[0] === 5) &&
-        (userMoves[1] === 1 || userMoves[1] === 5)
-      ) {
-        for (let smKey of smartKeys) {
-          if (availableMoves.includes(`box_${smKey}`)) {
-            key = smKey
-          }
-        }
-      } else if (
-        !key &&
-        userMoves.length === 2 &&
-        (smartKeys.some((one) => one === userMoves[0]) ||
-          smartKeys.some((one) => one === userMoves[1]))
-      ) {
-        if (userMoves[0] === 1 && userMoves[1] === 8) {
-          key = 7
-        } else if (userMoves[0] === 3 && userMoves[1] === 8) {
-          key = 7
-        }
-      } else if (
-        !key &&
-        ((userMoves[0] === 1 && userMoves[1] === 9) ||
-          (userMoves[0] === 9 && userMoves[1] === 1) ||
-          (userMoves[1] === 3 && userMoves[1] === 7) ||
-          (userMoves[0] === 7 && userMoves[1] === 3))
-      ) {
-        if (userMoves[0] === 1) {
+      if (winningKey) {
+        key = winningKey
+      }
+      console.log(key)
+      if (!key && userMoves.length === 1) {
+        key = userMoves[0] === 5 ? 1 : 5
+      }
+      if (!key && userMoves.length === 2) {
+        if (userMoves.includes(2) && userMoves.includes(4)) {
+          key = 1
+        } else if (userMoves.includes(6) && userMoves.includes(8)) {
+          key = 9
+        } else if (userMoves.includes(1) && userMoves.includes(9)) {
           key = 2
-        } else {
+        } else if (userMoves.includes(3) && userMoves.includes(7)) {
           key = 8
+        } else if (userMoves.includes(4) && userMoves.includes(8)) {
+          key = 7
+        } else if (userMoves.includes(1) && userMoves.includes(8)) {
+          key = 7
+        } else if (userMoves.includes(3) && userMoves.includes(8)) {
+          key = 7
+        } else if (userMoves.includes(2) && userMoves.includes(6)) {
+          key = 3
+        } else if (userMoves.includes(2) && userMoves.includes(9)) {
+          key = 3
+        } else if (userMoves.includes(2) && userMoves.includes(7)) {
+          key = 1
         }
-      } else if (!key) {
+      }
+      if (!key) {
         for (let smKey of smartKeys) {
           if (availableMoves.includes(`box_${smKey}`)) {
             key = smKey
