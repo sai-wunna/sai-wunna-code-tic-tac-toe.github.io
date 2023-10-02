@@ -87,6 +87,14 @@ document.addEventListener('DOMContentLoaded', function () {
       if (!key && userMoves.length === 1 && userMoves[0] !== 5) {
         key = 5
       } else if (
+        (!key &&
+          userMoves.length === 2 &&
+          userMoves[0] === 2 &&
+          userMoves[1] === 4) ||
+        (userMoves[1] === 2 && userMoves[0] === 4)
+      ) {
+        key = 1
+      } else if (
         !key &&
         (userMoves[0] === 1 || userMoves[0] === 5) &&
         (userMoves[1] === 1 || userMoves[1] === 5)
