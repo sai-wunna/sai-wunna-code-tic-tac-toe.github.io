@@ -91,7 +91,6 @@ document.addEventListener('DOMContentLoaded', function () {
       if (winningKey) {
         key = winningKey
       }
-      console.log(key)
       if (!key && userMoves.length === 1) {
         key = userMoves[0] === 5 ? 1 : 5
       }
